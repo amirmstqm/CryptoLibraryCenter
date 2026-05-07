@@ -1,0 +1,106 @@
+@import url('/css/common.css');
+
+/* ── Hero ── */
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 0 4.5rem;
+    background: linear-gradient(135deg, #2b4e6f 0%, #3a9de1 100%);
+}
+
+.crypto-animation {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+#animated-title {
+    margin: 0;
+    font-size: clamp(1.9rem, 5vw, 2.9rem);
+    line-height: 1.18;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+}
+
+.tagline {
+    margin: 1rem auto 0;
+    max-width: 680px;
+    color: #dceeff;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.cta-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.76rem 1.55rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.97rem;
+    background: #e84f35;
+    box-shadow: 0 10px 20px rgba(232, 79, 53, 0.35);
+    transition: background 0.2s ease;
+}
+
+.cta-button:hover {
+    background: #cc3d24;
+}
+
+/* ── Features section ── */
+.features-section {
+    padding: 2.2rem 0 3.6rem;
+    background: #e5e7eb;
+}
+
+.section-title {
+    margin: 0 0 1.2rem;
+    text-align: center;
+    color: #1e3148;
+    font-size: 1.7rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.feature-card {
+    background: #f4f7fc;
+    border: 1px solid #cfd8e8;
+    border-radius: 10px;
+    padding: 1.2rem;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(18, 38, 62, 0.07);
+}
+
+.feature-icon {
+    font-size: 1.7rem;
+    margin-bottom: 0.55rem;
+}
+
+.feature-card h3 {
+    margin: 0.15rem 0 0.45rem;
+    color: #1e3148;
+}
+
+.feature-card p {
+    margin: 0;
+    color: #405470;
+    line-height: 1.6;
+}
+
+@media (max-width: 980px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}

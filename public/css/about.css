@@ -1,0 +1,121 @@
+@import url('/css/common.css');
+
+/* ── Hero ── */
+.about-page .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 3.8rem 0 3.2rem;
+    background: linear-gradient(135deg, #2b4e6f 0%, #3a9de1 100%);
+}
+
+.about-page .hero .crypto-animation {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.about-page .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.about-page #animated-title {
+    color: #ffffff;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+}
+
+/* ── Main content area ── */
+.main-content {
+    background: #e5e7eb;
+    padding: 2rem 0 3.2rem;
+}
+
+/* ── Cards ── */
+.about-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.about-card {
+    background: #f4f7fc;
+    border: 1px solid #cfd8e8;
+    border-radius: 10px;
+    padding: 1.05rem;
+    box-shadow: 0 2px 6px rgba(18, 38, 62, 0.07);
+}
+
+.about-icon {
+    color: #2c7dba;
+    font-size: 1.45rem;
+    margin-bottom: 0.35rem;
+}
+
+.about-card h2 {
+    color: #1e3148;
+    margin-top: 0.2rem;
+    margin-bottom: 0.4rem;
+}
+
+.about-card p {
+    color: #405470;
+    margin: 0;
+}
+
+.section-title {
+    color: #1e3148;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.offer-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.offer-list li {
+    margin-bottom: 0.35rem;
+    color: #405470;
+}
+
+.team-section {
+    margin-top: 1.4rem;
+}
+
+/* ── Principles ── */
+.principles {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.principle {
+    background: #f4f7fc;
+    border: 1px solid #cfd8e8;
+    border-radius: 10px;
+    padding: 0.9rem;
+    box-shadow: 0 2px 6px rgba(18, 38, 62, 0.07);
+}
+
+.principle h3 {
+    color: #1e3148;
+    margin-top: 0.25rem;
+}
+
+.principle p {
+    color: #405470;
+}
+
+.principle-icon {
+    color: #2c7dba;
+}
+
+@media (max-width: 980px) {
+    .about-cards,
+    .principles {
+        grid-template-columns: 1fr;
+    }
+}
