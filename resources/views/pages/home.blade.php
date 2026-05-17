@@ -16,7 +16,7 @@
         <div class="hero-content">
             <div class="container">
                 <h1 id="animated-title">
-                    <span class="animated-text">CRYPTOGRAPHY LIBRARIES KNOWLEDGE SYSTEM</span>
+                    <span class="animated-text">CRYPTOGRAPHY LIBRARIES <br>KNOWLEDGE SYSTEM</span>
                 </h1>
                 <p class="tagline">
                     A one-stop center for anyone
@@ -55,7 +55,8 @@
                 <div class="feature-card">
                     <div class="feature-icon">📚</div>
                     <h3>Gain Expertise in Each Library</h3>
-                    <p>Understand the implementation language, installation process,
+                    <p>
+                        Understand the implementation language, installation process,
                         supported algorithms, and other key aspects to effectively
                         utilize each cryptographic library.</p>
                 </div>

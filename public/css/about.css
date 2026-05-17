@@ -24,6 +24,8 @@
 .about-page #animated-title {
     color: #ffffff;
     font-size: clamp(1.8rem, 5vw, 2.6rem);
+    letter-spacing: normal !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* ── Main content area ── */
