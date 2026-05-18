@@ -26,6 +26,27 @@ function setupTabs() {
 }
 
 // -----------------------------------------------
+// Normalize image URLs (fix expired Dropbox st= tokens)
+// -----------------------------------------------
+function normalizeImageUrl(url) {
+    if (!url) return url;
+    try {
+        const u = new URL(url);
+        // Convert Dropbox www links → dl subdomain (no session required) and drop st=
+        if (u.hostname === 'www.dropbox.com') {
+            u.hostname = 'dl.dropboxusercontent.com';
+            u.searchParams.delete('st');
+            if (!u.searchParams.has('raw')) {
+                u.searchParams.set('raw', '1');
+            }
+        }
+        return u.toString();
+    } catch {
+        return url;
+    }
+}
+
+// -----------------------------------------------
 // Format installation steps
 // -----------------------------------------------
 function formatInstallationSteps(installationData) {
@@ -46,14 +67,14 @@ function formatInstallationSteps(installationData) {
             <h4>Step ${i + 1}</h4>
             <code>${step.command}</code>
             <p>${step.explanation || 'No explanation provided'}</p>
-            ${step.imageURL ? `
+${step.imageURL ? (() => { const imgUrl = normalizeImageUrl(step.imageURL); return `
                 <div class="installation-image-item">
-                    <a href="${step.imageURL}" data-lightbox="installation-images" data-title="Step ${i + 1}">
-                        <img src="${step.imageURL}" alt="Installation Step ${i + 1}" class="installation-image" />
+                    <a href="${imgUrl}" data-lightbox="installation-images" data-title="Step ${i + 1}">
+                        <img src="${imgUrl}" alt="Installation Step ${i + 1}" class="installation-image" />
                     </a>
                     <p class="installation-image-explanation">${step.imageExplanation || ''}</p>
                 </div>
-            ` : ''}
+            `; })() : ''}
         </div>
     `).join('');
 }
@@ -93,14 +114,14 @@ function formatTestingImages(images) {
         <div class="testing-images">
             <h4>Final Output from the Program</h4>
             <div class="testing-images-list">
-                ${images.filter(img => img.imageURL).map((img, idx) => `
+                ${images.filter(img => img.imageURL).map((img, idx) => { const imgUrl = normalizeImageUrl(img.imageURL); return `
                     <div class="testing-image-item">
-                        <a href="${img.imageURL}" data-lightbox="testing-images" data-title="${img.explanation || 'Testing Image'}">
-                            <img src="${img.imageURL}" alt="Testing Image ${idx + 1}" class="testing-image" />
+                        <a href="${imgUrl}" data-lightbox="testing-images" data-title="${img.explanation || 'Testing Image'}">
+                            <img src="${imgUrl}" alt="Testing Image ${idx + 1}" class="testing-image" />
                         </a>
                         <p class="testing-image-explanation">${img.explanation || ''}</p>
                     </div>
-                `).join('')}
+                `; }).join('')}
             </div>
         </div>`;
 }
@@ -250,6 +271,8 @@ async function init() {
     if (!libraryId) return;
 
     const data = await fetchFromMySQL(libraryId) ?? await fetchFromFirebase(libraryId);
+
+    document.getElementById('loading-spinner').style.display = 'none';
 
     if (data) {
         renderLibraryDetail(data);

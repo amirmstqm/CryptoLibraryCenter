@@ -86,8 +86,18 @@
 }
 
 .github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     color: #2c7dba;
     word-break: break-all;
+}
+
+.github-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
 }
 
 .algorithm-tag {
@@ -146,4 +156,70 @@ pre {
     .details-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* ── Installation images ── */
+.installation-image-item {
+    margin-top: 0.75rem;
+}
+
+.installation-image-item a {
+    display: inline-block;
+}
+
+.installation-image {
+    display: block;
+    max-width: 100%;
+    max-height: 340px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid #cfd8e8;
+    cursor: zoom-in;
+}
+
+.installation-image-explanation {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: #5a7090;
+}
+
+/* ── Testing images ── */
+.testing-images {
+    margin-top: 1rem;
+}
+
+.testing-images-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.testing-image-item {
+    flex: 1 1 220px;
+    max-width: 100%;
+}
+
+.testing-image-item a {
+    display: inline-block;
+}
+
+.testing-image {
+    display: block;
+    max-width: 100%;
+    max-height: 340px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid #cfd8e8;
+    cursor: zoom-in;
+}
+
+.testing-image-explanation {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: #5a7090;
 }
