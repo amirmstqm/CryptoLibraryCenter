@@ -12,7 +12,7 @@
     position: absolute;
     inset: 0;
     z-index: 0;
-    opacity: 0.3;
+    opacity: 0.30;
 }
 
 .libraries-page .hero-content {
@@ -23,7 +23,9 @@
 
 .libraries-page #animated-title {
     color: #ffffff;
-    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    letter-spacing: normal !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* ── Main content area ── */
@@ -147,4 +149,20 @@
     .features {
         grid-template-columns: 1fr;
     }
+}
+
+/* ── GitHub Link ── */
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #4A90D9;
+    text-decoration: none;
+    font-size: 14px;
+}
+.github-link:hover {
+    text-decoration: underline;
+}
+.github-icon {
+    flex-shrink: 0;
 }

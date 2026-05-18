@@ -41,6 +41,7 @@
                     <p>A leading information hub focused on modern cryptography and post-quantum technologies.</p>
                 </div>
             </div>
+            <br>
             <div class="copyright">
                 <p>© 2025 Bahagian Integrasi Teknologi, Pusat Teknologi Dan Pengurusan Kriptologi Malaysia. All rights reserved.</p>
             </div>
