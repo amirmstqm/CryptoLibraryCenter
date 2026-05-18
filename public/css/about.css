@@ -121,3 +121,29 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ══════════════════════════════════
+   Dark Mode — About page
+══════════════════════════════════ */
+html.dark .about-main {
+    background: #0f172a;
+}
+
+html.dark .about-card,
+html.dark .principle-card {
+    background: #1e293b;
+    border-color: #2d3f55;
+    color: #e2e8f0;
+}
+
+html.dark .about-card h2,
+html.dark .about-card h3,
+html.dark .principle-card h3 {
+    color: #e2e8f0;
+}
+
+html.dark .about-card p,
+html.dark .principle-card p {
+    color: #94a3b8;
+}
+

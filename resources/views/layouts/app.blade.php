@@ -11,6 +11,9 @@
 
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    {{-- Dark mode: apply immediately to prevent flash --}}
+    <script>if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');</script>
 </head>
 
 <body class="@yield('body-class')">
@@ -26,6 +29,10 @@
                 <li><a href="{{ route('libraries') }}" @class(['active' => request()->routeIs('libraries')])>Library</a></li>
                 <li><a href="{{ route('about') }}" @class(['active' => request()->routeIs('about')])>About</a></li>
             </ul>
+
+            <button id="dark-toggle" class="dark-toggle" title="Toggle dark mode">
+                <i class="fas fa-moon" id="dark-icon"></i>
+            </button>
             <div class="nav-auth">
                 @auth
                     <div class="user-menu">
@@ -95,6 +102,25 @@
             // Close dropdown when clicking outside
             document.addEventListener('click', () => {
                 userDropdown.classList.remove('active');
+            });
+        }
+
+        // Dark mode toggle
+        const darkToggle = document.getElementById('dark-toggle');
+        const darkIcon   = document.getElementById('dark-icon');
+
+        function syncDarkIcon() {
+            const isDark = document.documentElement.classList.contains('dark');
+            darkIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        syncDarkIcon();
+
+        if (darkToggle) {
+            darkToggle.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('darkMode', isDark);
+                syncDarkIcon();
             });
         }
     </script>

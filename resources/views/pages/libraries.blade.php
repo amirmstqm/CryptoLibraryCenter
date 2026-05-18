@@ -28,7 +28,11 @@
             {{-- Search Bar --}}
             <div class="search-container">
                 <div class="search-filter-group">
-                    <input type="text" id="search-input" placeholder="Search for cryptography topics...">
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="search-input" placeholder="Search by name, developer, language or algorithm...">
+                        <button type="button" id="clear-search" class="clear-search-btn" title="Clear search">&times;</button>
+                    </div>
                 </div>
             </div>
 
@@ -100,10 +104,20 @@
                         </label>
                     </div>
 
+                    {{-- Clear Filters --}}
+                    <button type="button" id="clear-filters" class="clear-filters-btn">Clear All Filters</button>
+
                 </aside>
 
                 {{-- Library Cards (populated by JS via Firebase) --}}
                 <div class="content-area">
+                    <div class="results-bar">
+                        <span id="result-count" class="result-count"></span>
+                        <select id="sort-select" class="sort-select">
+                            <option value="az">Name: A → Z</option>
+                            <option value="za">Name: Z → A</option>
+                        </select>
+                    </div>
                     <div class="features" id="library-cards">
                         {{-- Cards injected by data-fetching.js --}}
                     </div>

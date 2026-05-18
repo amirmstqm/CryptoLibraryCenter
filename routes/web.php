@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 // -----------------------------------------------
 // API Routes — served from MySQL (used by JS)
 // -----------------------------------------------
-Route::prefix('api')->group(function () {
+Route::prefix('api')->middleware('auth')->group(function () {
     // GET /api/libraries — all visible libraries
     // Supports: ?search=, ?language=, ?pqc=, ?pqc_supported=
     Route::get('/libraries', [SyncController::class, 'libraries'])->name('api.libraries');

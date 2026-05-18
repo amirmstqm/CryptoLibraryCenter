@@ -10,6 +10,12 @@
             <p class="auth-subtitle">Sign in to your CryptoLibraryCenter account</p>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <div class="alert-title">Login Failed</div>
@@ -41,14 +47,19 @@
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    class="form-control @error('password') is-invalid @enderror"
-                    placeholder="••••••••"
-                    required
-                >
+                <div class="input-password-wrapper">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-control @error('password') is-invalid @enderror"
+                        placeholder="••••••••"
+                        required
+                    >
+                    <button type="button" class="password-toggle" onclick="togglePassword('password', this)" tabindex="-1">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
                 @error('password')
                     <span class="form-error">{{ $message }}</span>
                 @enderror

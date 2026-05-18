@@ -57,14 +57,19 @@
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    class="form-control @error('password') is-invalid @enderror"
-                    placeholder="••••••••"
-                    required
-                >
+                <div class="input-password-wrapper">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-control @error('password') is-invalid @enderror"
+                        placeholder="••••••••"
+                        required
+                    >
+                    <button type="button" class="password-toggle" onclick="togglePassword('password', this)" tabindex="-1">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
                 <small class="form-hint">At least 8 characters, including uppercase, lowercase, numbers, and symbols</small>
                 @error('password')
                     <span class="form-error">{{ $message }}</span>
@@ -73,14 +78,19 @@
 
             <div class="form-group">
                 <label for="password_confirmation">Confirm Password</label>
-                <input 
-                    type="password" 
-                    id="password_confirmation" 
-                    name="password_confirmation" 
-                    class="form-control @error('password_confirmation') is-invalid @enderror"
-                    placeholder="••••••••"
-                    required
-                >
+                <div class="input-password-wrapper">
+                    <input 
+                        type="password" 
+                        id="password_confirmation" 
+                        name="password_confirmation" 
+                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                        placeholder="••••••••"
+                        required
+                    >
+                    <button type="button" class="password-toggle" onclick="togglePassword('password_confirmation', this)" tabindex="-1">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
                 @error('password_confirmation')
                     <span class="form-error">{{ $message }}</span>
                 @enderror

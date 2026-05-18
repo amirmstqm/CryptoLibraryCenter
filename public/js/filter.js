@@ -14,7 +14,11 @@ function applyFilters() {
   const openSourceFilter = document.getElementById("filter-open-source");
   const pqcSupportedCheckboxes = document.querySelectorAll(".pqc-supported-filter");
 
-  const query = searchInput ? searchInput.value.toLowerCase() : "";
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+  // Show/hide the clear-search × button
+  const clearSearch = document.getElementById("clear-search");
+  if (clearSearch) clearSearch.style.display = query ? "flex" : "none";
 
   const selectedFilters = Array.from(filterCheckboxes)
     .filter((cb) => cb.checked)
@@ -32,9 +36,13 @@ function applyFilters() {
   const isOpenSource = openSourceFilter ? openSourceFilter.checked : false;
 
   const filtered = libraries.filter((lib) => {
+    // Search across name, developer, language, and PQC algorithms
     const nameMatch =
-      lib.normalizedName?.includes(query) ||
-      lib.name.toLowerCase().includes(query);
+      !query ||
+      lib.name.toLowerCase().includes(query) ||
+      (lib.developer && lib.developer.toLowerCase().includes(query)) ||
+      (lib.language && lib.language.toLowerCase().includes(query)) ||
+      lib.pqcAlgorithms?.some((alg) => alg.toLowerCase().includes(query));
 
     const algoMatch =
       selectedFilters.length === 0 ||
@@ -73,11 +81,26 @@ function applyFilters() {
     return nameMatch && algoMatch && languageMatch && licenseMatch && openSourceMatch && pqcSupportedMatch;
   });
 
+  // Sort
+  const sortSelect = document.getElementById("sort-select");
+  const sortVal = sortSelect ? sortSelect.value : "az";
+  filtered.sort((a, b) =>
+    sortVal === "za"
+      ? b.name.localeCompare(a.name)
+      : a.name.localeCompare(b.name)
+  );
+
   renderLibraries(filtered);
 }
 
 function renderLibraries(libs) {
   if (!libraryCardsContainer) return;
+
+  // Update result count
+  const resultCount = document.getElementById("result-count");
+  if (resultCount) {
+    resultCount.textContent = `Showing ${libs.length} of ${libraries.length} ${libraries.length === 1 ? 'library' : 'libraries'}`;
+  }
 
   libraryCardsContainer.innerHTML = libs
     .map(
@@ -131,6 +154,9 @@ function renderLibraries(libs) {
 // Event listeners
 document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search-input");
+  const clearSearch = document.getElementById("clear-search");
+  const clearFilters = document.getElementById("clear-filters");
+  const sortSelect = document.getElementById("sort-select");
   const filterCheckboxes = document.querySelectorAll(".pqc-filter");
   const languageCheckboxes = document.querySelectorAll(".language-filter");
   const licenseFilter = document.getElementById("filter-license");
@@ -138,6 +164,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const pqcSupportedCheckboxes = document.querySelectorAll(".pqc-supported-filter");
 
   if (searchInput) searchInput.addEventListener("input", applyFilters);
+  if (sortSelect) sortSelect.addEventListener("change", applyFilters);
+
+  if (clearSearch) {
+    clearSearch.style.display = "none";
+    clearSearch.addEventListener("click", () => {
+      searchInput.value = "";
+      clearSearch.style.display = "none";
+      applyFilters();
+      searchInput.focus();
+    });
+  }
+
+  if (clearFilters) {
+    clearFilters.addEventListener("click", () => {
+      if (searchInput) searchInput.value = "";
+      document.querySelectorAll(".pqc-filter, .language-filter, .pqc-supported-filter").forEach(cb => cb.checked = false);
+      if (licenseFilter) licenseFilter.value = "";
+      if (openSourceFilter) openSourceFilter.checked = false;
+      if (sortSelect) sortSelect.value = "az";
+      if (clearSearch) clearSearch.style.display = "none";
+      applyFilters();
+    });
+  }
+
   filterCheckboxes.forEach((cb) => cb.addEventListener("change", applyFilters));
   languageCheckboxes.forEach((cb) => cb.addEventListener("change", applyFilters));
   pqcSupportedCheckboxes.forEach((cb) => cb.addEventListener("change", applyFilters));

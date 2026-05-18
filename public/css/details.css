@@ -223,3 +223,81 @@ pre {
     font-size: 0.85rem;
     color: #5a7090;
 }
+
+/* ══════════════════════════════════
+   Dark Mode — Details page
+══════════════════════════════════ */
+html.dark .main-content {
+    background: #0f172a;
+}
+
+html.dark .library-details-card {
+    background: #1e293b;
+    border-color: #2d3f55;
+}
+
+html.dark .library-header h1 {
+    color: #e2e8f0;
+}
+
+html.dark .subtitle {
+    color: #94a3b8;
+}
+
+html.dark .tab-button {
+    background: #1e293b;
+    border-color: #2d3f55;
+    color: #94a3b8;
+}
+
+html.dark .tab-button:hover {
+    background: #2d3f55;
+    color: #cbd5e1;
+}
+
+html.dark .tab-button.active {
+    background: #3a9de1;
+    border-color: #3a9de1;
+    color: #fff;
+}
+
+html.dark .detail-item,
+html.dark .github-section,
+html.dark .algorithms-section,
+html.dark .limitation-content,
+html.dark .installation-step,
+html.dark .testing-item {
+    background: #162032;
+    border-color: #2d3f55;
+}
+
+html.dark .detail-item h3,
+html.dark .github-section h3,
+html.dark .algorithms-section h3 {
+    color: #e2e8f0;
+}
+
+html.dark .detail-item p,
+html.dark .github-section p,
+html.dark .limitation-content p {
+    color: #94a3b8;
+}
+
+html.dark .algorithm-tag {
+    background: rgba(36, 112, 176, 0.25);
+    color: #7dd3fc;
+}
+
+html.dark .installation-image,
+html.dark .testing-image {
+    border-color: #2d3f55;
+}
+
+html.dark .testing-image-explanation {
+    color: #64748b;
+}
+
+html.dark .back-button {
+    color: #5ec2ff;
+}
+

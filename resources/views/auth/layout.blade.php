@@ -6,18 +6,16 @@
     <title>@yield('title') - CryptoLibraryCenter</title>
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    {{-- Dark mode: apply immediately to prevent flash --}}
+    <script>if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');</script>
 </head>
 <body>
     <nav>
         <div class="container nav-container">
-            <a href="{{ route('home') }}" class="logo">
+            <a href="{{ route('login') }}" class="logo">
                 <span>CryptoLibraryCenter</span>
             </a>
-            <ul class="nav-links">
-                <li><a href="{{ route('home') }}">Home</a></li>
-                <li><a href="{{ route('libraries') }}">Libraries</a></li>
-                <li><a href="{{ route('about') }}">About</a></li>
-            </ul>
         </div>
     </nav>
 
@@ -41,3 +39,16 @@
     </footer>
 </body>
 </html>
+<script>
+    function togglePassword(fieldId, btn) {
+        const input = document.getElementById(fieldId);
+        const icon  = btn.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+</script>

@@ -21,16 +21,6 @@
                     <p class="profile-email">{{ $user->email }}</p>
                     <p class="profile-level">{{ ucfirst($user->expertise_level) }} Level</p>
                 </div>
-                <div class="profile-stats">
-                    <div class="stat">
-                        <span class="stat-value">5</span>
-                        <span class="stat-label">Saved</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">12</span>
-                        <span class="stat-label">Viewed</span>
-                    </div>
-                </div>
             </div>
         </div>
 
