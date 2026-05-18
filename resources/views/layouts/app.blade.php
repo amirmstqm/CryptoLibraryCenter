@@ -26,6 +26,36 @@
                 <li><a href="{{ route('libraries') }}" @class(['active' => request()->routeIs('libraries')])>Library</a></li>
                 <li><a href="{{ route('about') }}" @class(['active' => request()->routeIs('about')])>About</a></li>
             </ul>
+            <div class="nav-auth">
+                @auth
+                    <div class="user-menu">
+                        <button class="user-menu-btn" id="userMenuBtn">
+                            @if (auth()->user()->profile_picture)
+                                <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="{{ auth()->user()->name }}" class="user-avatar">
+                            @else
+                                <div class="user-avatar-placeholder">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+                            @endif
+                            <span class="user-name">{{ auth()->user()->name }}</span>
+                        </button>
+                        <div class="user-dropdown" id="userDropdown">
+                            <a href="{{ route('profile') }}" class="dropdown-item">
+                                <i class="fas fa-user"></i> My Profile
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="dropdown-item logout-btn">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <div class="nav-auth-links">
+                        <a href="{{ route('login') }}" class="btn-login">Sign In</a>
+                        <a href="{{ route('register') }}" class="btn-register">Register</a>
+                    </div>
+                @endauth
+            </div>
         </div>
     </nav>
 
@@ -50,6 +80,24 @@
 
     {{-- Page-specific JS --}}
     @yield('scripts')
+
+    <script>
+        // User menu dropdown
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const userDropdown = document.getElementById('userDropdown');
+
+        if (userMenuBtn) {
+            userMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                userDropdown.classList.remove('active');
+            });
+        }
+    </script>
 
 </body>
 </html>

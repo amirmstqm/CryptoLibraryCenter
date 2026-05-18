@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SyncController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,12 +12,30 @@ use App\Http\Controllers\SyncController;
 */
 
 // -----------------------------------------------
-// Page Routes
+// Authentication Routes
 // -----------------------------------------------
-Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/libraries', [PageController::class, 'libraries'])->name('libraries');
-Route::get('/libraries/details', [PageController::class, 'details'])->name('details');
-Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/profile', [AuthController::class, 'showProfile'])->name('profile');
+    Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
+});
+
+// -----------------------------------------------
+// Page Routes (Protected - Auth Required)
+// -----------------------------------------------
+Route::middleware('auth')->group(function () {
+    Route::get('/', [PageController::class, 'home'])->name('home');
+    Route::get('/libraries', [PageController::class, 'libraries'])->name('libraries');
+    Route::get('/libraries/details', [PageController::class, 'details'])->name('details');
+    Route::get('/about', [PageController::class, 'about'])->name('about');
+});
 
 // -----------------------------------------------
 // API Routes — served from MySQL (used by JS)
