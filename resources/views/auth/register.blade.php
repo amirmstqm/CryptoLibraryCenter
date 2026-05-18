@@ -24,10 +24,10 @@
 
             <div class="form-group">
                 <label for="name">Full Name</label>
-                <input 
-                    type="text" 
-                    id="name" 
-                    name="name" 
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
                     value="{{ old('name') }}"
                     class="form-control @error('name') is-invalid @enderror"
                     placeholder="John Doe"
@@ -41,10 +41,10 @@
 
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
                     value="{{ old('email') }}"
                     class="form-control @error('email') is-invalid @enderror"
                     placeholder="you@example.com"
@@ -58,10 +58,10 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <div class="input-password-wrapper">
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
                         class="form-control @error('password') is-invalid @enderror"
                         placeholder="••••••••"
                         required
@@ -79,10 +79,10 @@
             <div class="form-group">
                 <label for="password_confirmation">Confirm Password</label>
                 <div class="input-password-wrapper">
-                    <input 
-                        type="password" 
-                        id="password_confirmation" 
-                        name="password_confirmation" 
+                    <input
+                        type="password"
+                        id="password_confirmation"
+                        name="password_confirmation"
                         class="form-control @error('password_confirmation') is-invalid @enderror"
                         placeholder="••••••••"
                         required
@@ -98,9 +98,9 @@
 
             <div class="form-group">
                 <label for="expertise_level">Expertise Level</label>
-                <select 
-                    id="expertise_level" 
-                    name="expertise_level" 
+                <select
+                    id="expertise_level"
+                    name="expertise_level"
                     class="form-control @error('expertise_level') is-invalid @enderror"
                     required
                 >

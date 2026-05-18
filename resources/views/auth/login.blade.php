@@ -30,10 +30,10 @@
 
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
                     value="{{ old('email') }}"
                     class="form-control @error('email') is-invalid @enderror"
                     placeholder="you@example.com"
@@ -48,10 +48,10 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <div class="input-password-wrapper">
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
                         class="form-control @error('password') is-invalid @enderror"
                         placeholder="••••••••"
                         required
@@ -66,9 +66,9 @@
             </div>
 
             <div class="form-group checkbox-group">
-                <input 
-                    type="checkbox" 
-                    id="remember" 
+                <input
+                    type="checkbox"
+                    id="remember"
                     name="remember"
                     {{ old('remember') ? 'checked' : '' }}
                 >

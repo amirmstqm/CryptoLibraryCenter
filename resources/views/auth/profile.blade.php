@@ -48,10 +48,10 @@
 
                     <div class="form-group">
                         <label for="name">Full Name</label>
-                        <input 
-                            type="text" 
-                            id="name" 
-                            name="name" 
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
                             value="{{ old('name', $user->name) }}"
                             class="form-control @error('name') is-invalid @enderror"
                             required
@@ -63,9 +63,9 @@
 
                     <div class="form-group">
                         <label for="bio">Bio</label>
-                        <textarea 
-                            id="bio" 
-                            name="bio" 
+                        <textarea
+                            id="bio"
+                            name="bio"
                             rows="4"
                             class="form-control @error('bio') is-invalid @enderror"
                             placeholder="Tell us about your cryptography interests..."
@@ -78,9 +78,9 @@
 
                     <div class="form-group">
                         <label for="expertise_level">Expertise Level</label>
-                        <select 
-                            id="expertise_level" 
-                            name="expertise_level" 
+                        <select
+                            id="expertise_level"
+                            name="expertise_level"
                             class="form-control @error('expertise_level') is-invalid @enderror"
                             required
                         >
@@ -95,10 +95,10 @@
 
                     <div class="form-group">
                         <label for="profile_picture">Profile Picture</label>
-                        <input 
-                            type="file" 
-                            id="profile_picture" 
-                            name="profile_picture" 
+                        <input
+                            type="file"
+                            id="profile_picture"
+                            name="profile_picture"
                             accept="image/*"
                             class="form-control @error('profile_picture') is-invalid @enderror"
                         >
