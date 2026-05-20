@@ -1,9 +1,17 @@
+import { initializeComparison, openComparisonModal } from './comparison.js';
+
 let libraries = [];
 const libraryCardsContainer = document.getElementById("library-cards");
+
+// Export to window for global access
+window.openComparisonModal = openComparisonModal;
 
 export function setLibraries(data) {
   libraries = data;
   applyFilters(); // Initial render
+  
+  // Initialize comparison feature with loaded libraries
+  initializeComparison(libraries);
 }
 
 function applyFilters() {

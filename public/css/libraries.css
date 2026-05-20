@@ -322,3 +322,75 @@ html.dark .feature-card .algorithm-badge {
     background: rgba(58, 157, 225, 0.15);
     color: #7dd3fc;
 }
+
+/* ── Results Actions Container ── */
+.results-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* ── Compare Button ── */
+.compare-btn {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #3a9de1 0%, #2b7cc4 100%);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(58, 157, 225, 0.3);
+    white-space: nowrap;
+}
+
+.compare-btn:hover {
+    background: linear-gradient(135deg, #2b7cc4 0%, #1e5aa8 100%);
+    box-shadow: 0 4px 12px rgba(58, 157, 225, 0.5);
+    transform: translateY(-2px);
+}
+
+.compare-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(58, 157, 225, 0.3);
+}
+
+.compare-btn i {
+    font-size: 1rem;
+}
+
+/* Dark mode support for compare button */
+html.dark .compare-btn {
+    background: linear-gradient(135deg, #2b7cc4 0%, #1e5aa8 100%);
+    box-shadow: 0 2px 8px rgba(43, 124, 196, 0.4);
+}
+
+html.dark .compare-btn:hover {
+    background: linear-gradient(135deg, #3a9de1 0%, #2b7cc4 100%);
+    box-shadow: 0 4px 12px rgba(58, 157, 225, 0.6);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .results-actions {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+    
+    .compare-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    #sort-select {
+        width: 100%;
+    }
+}
+

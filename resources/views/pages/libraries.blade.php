@@ -6,6 +6,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/libraries.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/comparison.css') }}">
 @endsection
 
 @section('content')
@@ -113,10 +114,15 @@
                 <div class="content-area">
                     <div class="results-bar">
                         <span id="result-count" class="result-count"></span>
-                        <select id="sort-select" class="sort-select">
-                            <option value="az">Name: A → Z</option>
-                            <option value="za">Name: Z → A</option>
-                        </select>
+                        <div class="results-actions">
+                            <button id="compare-btn" class="compare-btn" title="Compare algorithms">
+                                <i class="fas fa-chart-bar"></i> Compare Algorithms
+                            </button>
+                            <select id="sort-select" class="sort-select">
+                                <option value="az">Name: A → Z</option>
+                                <option value="za">Name: Z → A</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="features" id="library-cards">
                         {{-- Cards injected by data-fetching.js --}}
@@ -124,8 +130,11 @@
                 </div>
             </div>
 
-        </div>
     </div>
+</div>
+
+{{-- Comparison Modal --}}
+@include('comparison-modal')
 
 @endsection
 
@@ -138,6 +147,17 @@
     <script type="module" src="{{ asset('js/main.js') }}"></script>
     <script type="module" src="{{ asset('js/filter.js') }}"></script>
     <script type="module" src="{{ asset('js/library-details.js') }}"></script>
+
+    {{-- Wire up compare button after DOM is ready --}}
+    <script type="module">
+        // Wait for comparison module to be initialized
+        document.addEventListener('DOMContentLoaded', () => {
+            const compareBtn = document.getElementById('compare-btn');
+            if (compareBtn && window.openComparisonModal) {
+                compareBtn.addEventListener('click', window.openComparisonModal);
+            }
+        });
+    </script>
     <script type="module" src="{{ asset('js/firebase-config.js') }}"></script>
     <script type="module">
         import { fetchAndDisplayLibraries } from "{{ asset('js/data-fetching.js') }}";
