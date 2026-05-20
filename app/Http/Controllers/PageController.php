@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
     /**
+     * Show the public Landing page.
+     */
+    public function landing()
+    {
+        return view('pages.landing');
+    }
+
+    /**
      * Show the Home page.
      */
     public function home()
