@@ -7,17 +7,17 @@
         </div>
 
         <div class="comparison-modal-body">
-            <!-- Algorithm Selection Section -->
+            <!-- Library Selection Section -->
             <div class="comparison-selection">
                 <div class="selection-header">
-                    <h3>Select Algorithms to Compare</h3>
-                    <p class="selection-hint">Choose up to 2 algorithms for comparison</p>
+                    <h3>Select Libraries to Compare</h3>
+                    <p class="selection-hint">Choose up to 3 libraries for comparison</p>
                 </div>
 
                 <div class="algorithm-selector">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
-                        <input type="text" id="comparison-search" placeholder="Search algorithms...">
+                        <input type="text" id="comparison-search" placeholder="Search libraries...">
                     </div>
                     <div id="algorithm-list" class="algorithm-list">
                         <!-- Populated by JavaScript -->
@@ -25,9 +25,9 @@
                 </div>
 
                 <div class="selected-algorithms">
-                    <h4>Selected for Comparison (<span id="selected-count">0</span>/2)</h4>
+                    <h4>Selected for Comparison (<span id="selected-count">0</span>/3)</h4>
                     <div id="selected-list" class="selected-list">
-                        <!-- Selected algorithms will appear here -->
+                        <!-- Selected libraries will appear here -->
                     </div>
                 </div>
             </div>

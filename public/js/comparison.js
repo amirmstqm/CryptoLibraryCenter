@@ -1,69 +1,25 @@
 /**
  * comparison.js
- * 
- * Manages algorithm comparison functionality
- * - Algorithm selection
- * - Comparison table generation
+ *
+ * Manages library comparison functionality
+ * - Library selection by name
+ * - Comparison table generation (developer, languages, latest version,
+ *   latest release, license, open source, github repository, pqc algorithm)
  * - Export functionality
  */
 
-let allAlgorithms = [];
-let selectedAlgorithms = [];
-const MAX_COMPARISON = 2;
+let allLibraries = [];
+let selectedLibraries = []; // stores library names
+const MAX_COMPARISON = 3;
 
 /**
  * Initialize comparison module
  * @param {Array} libraries - Array of library objects
  */
 export function initializeComparison(libraries) {
-    extractAlgorithms(libraries);
+    allLibraries = [...libraries].sort((a, b) => a.name.localeCompare(b.name));
     setupComparisonModal();
     setupEventListeners();
-}
-
-/**
- * Extract unique algorithms from libraries
- */
-function extractAlgorithms(libraries) {
-    const algorithms = new Map();
-
-    libraries.forEach(lib => {
-        if (lib.pqcAlgorithms && Array.isArray(lib.pqcAlgorithms)) {
-            lib.pqcAlgorithms.forEach(alg => {
-                if (!algorithms.has(alg)) {
-                    algorithms.set(alg, {
-                        name: alg,
-                        type: getAlgorithmType(alg),
-                        libraries: []
-                    });
-                }
-                algorithms.get(alg).libraries.push({
-                    name: lib.name,
-                    developer: lib.developer,
-                    language: lib.language,
-                    version: lib['latest-version'],
-                    release: lib['latest-release']
-                });
-            });
-        }
-    });
-
-    allAlgorithms = Array.from(algorithms.values()).sort((a, b) => 
-        a.name.localeCompare(b.name)
-    );
-}
-
-/**
- * Determine algorithm type (Key Encapsulation, Signature, etc.)
- */
-function getAlgorithmType(algName) {
-    const name = algName.toLowerCase();
-    
-    if (name.includes('kyber') || name.includes('ntru')) return 'KEM';
-    if (name.includes('dilithium') || name.includes('sphincs') || name.includes('falcon')) return 'Signature';
-    if (name.includes('pqc unsupported')) return 'Classic';
-    
-    return 'PQC';
 }
 
 /**
@@ -75,61 +31,57 @@ function setupComparisonModal() {
         console.warn('Comparison modal not found in DOM');
         return;
     }
-
-    renderAlgorithmList();
+    renderLibraryList();
 }
 
 /**
- * Render available algorithms
+ * Render available libraries
  */
-function renderAlgorithmList() {
+function renderLibraryList() {
     const algorithmList = document.getElementById('algorithm-list');
     if (!algorithmList) return;
 
-    algorithmList.innerHTML = allAlgorithms
-        .map(alg => `
-            <div class="algorithm-item" data-algorithm="${alg.name}">
-                <div class="algorithm-name">${alg.name}</div>
-                <div class="algorithm-type">${alg.type}</div>
+    algorithmList.innerHTML = allLibraries
+        .map(lib => `
+            <div class="algorithm-item" data-algorithm="${escapeAttr(lib.name)}">
+                <div class="algorithm-name">${escapeHtml(lib.name)}</div>
+                <div class="algorithm-type">${escapeHtml(lib.developer || '')}</div>
             </div>
         `)
         .join('');
 
-    // Add click handlers
     algorithmList.querySelectorAll('.algorithm-item').forEach(item => {
-        item.addEventListener('click', () => toggleAlgorithmSelection(item));
+        item.addEventListener('click', () => toggleLibrarySelection(item));
     });
 }
 
 /**
- * Toggle algorithm selection
+ * Toggle library selection
  */
-function toggleAlgorithmSelection(element) {
-    const algorithmName = element.dataset.algorithm;
+function toggleLibrarySelection(element) {
+    const libName = element.dataset.algorithm;
     const isSelected = element.classList.contains('selected');
 
     if (isSelected) {
-        // Deselect
-        selectedAlgorithms = selectedAlgorithms.filter(a => a !== algorithmName);
+        selectedLibraries = selectedLibraries.filter(n => n !== libName);
         element.classList.remove('selected');
     } else {
-        // Select (if under limit)
-        if (selectedAlgorithms.length < MAX_COMPARISON) {
-            selectedAlgorithms.push(algorithmName);
+        if (selectedLibraries.length < MAX_COMPARISON) {
+            selectedLibraries.push(libName);
             element.classList.add('selected');
         } else {
-            showNotification('Maximum 2 algorithms can be compared', 'warning');
+            showNotification('Maximum 3 libraries can be compared', 'warning');
             return;
         }
     }
 
     updateSelectedList();
-    updateAlgorithmList();
+    updateLibraryList();
     updateComparisonTable();
 }
 
 /**
- * Update selected algorithms display
+ * Update selected libraries display
  */
 function updateSelectedList() {
     const selectedList = document.getElementById('selected-list');
@@ -137,12 +89,12 @@ function updateSelectedList() {
 
     if (!selectedList || !selectedCount) return;
 
-    selectedCount.textContent = selectedAlgorithms.length;
+    selectedCount.textContent = selectedLibraries.length;
 
-    selectedList.innerHTML = selectedAlgorithms
-        .map(alg => `
-            <div class="selected-item" data-algorithm="${alg}">
-                <span class="selected-item-name">${alg}</span>
+    selectedList.innerHTML = selectedLibraries
+        .map(name => `
+            <div class="selected-item" data-algorithm="${escapeAttr(name)}">
+                <span class="selected-item-name">${escapeHtml(name)}</span>
                 <button class="remove-btn" title="Remove">
                     <i class="fas fa-times"></i>
                 </button>
@@ -150,44 +102,42 @@ function updateSelectedList() {
         `)
         .join('');
 
-    // Add remove handlers
     selectedList.querySelectorAll('.remove-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const alg = btn.closest('.selected-item').dataset.algorithm;
-            selectedAlgorithms = selectedAlgorithms.filter(a => a !== alg);
-            
-            // Unselect in algorithm list
-            const item = document.querySelector(`.algorithm-item[data-algorithm="${alg}"]`);
+            const name = btn.closest('.selected-item').dataset.algorithm;
+            selectedLibraries = selectedLibraries.filter(n => n !== name);
+
+            const item = document.querySelector(`.algorithm-item[data-algorithm="${escapeAttr(name)}"]`);
             if (item) item.classList.remove('selected');
-            
+
             updateSelectedList();
-            updateAlgorithmList();
+            updateLibraryList();
             updateComparisonTable();
         });
     });
 }
 
 /**
- * Update algorithm list disabled state
+ * Update library list disabled state
  */
-function updateAlgorithmList() {
+function updateLibraryList() {
     const algorithmList = document.getElementById('algorithm-list');
     if (!algorithmList) return;
 
     algorithmList.querySelectorAll('.algorithm-item').forEach(item => {
-        const algName = item.dataset.algorithm;
-        const isSelected = selectedAlgorithms.includes(algName);
-        const canSelect = isSelected || selectedAlgorithms.length < MAX_COMPARISON;
+        const name = item.dataset.algorithm;
+        const isSelected = selectedLibraries.includes(name);
+        const canSelect = isSelected || selectedLibraries.length < MAX_COMPARISON;
 
         item.classList.toggle('selected', isSelected);
         item.classList.toggle('disabled', !canSelect && !isSelected);
-        item.style.pointerEvents = canSelect || isSelected ? 'auto' : 'none';
+        item.style.pointerEvents = (canSelect || isSelected) ? 'auto' : 'none';
     });
 }
 
 /**
- * Update comparison table based on selected algorithms
+ * Update comparison table based on selected libraries
  */
 function updateComparisonTable() {
     const tableSection = document.getElementById('comparison-table-section');
@@ -195,62 +145,36 @@ function updateComparisonTable() {
 
     if (!tableSection || !table) return;
 
-    // Show/hide table section
-    if (selectedAlgorithms.length === 0) {
+    if (selectedLibraries.length === 0) {
         tableSection.classList.add('hidden');
         return;
     }
 
     tableSection.classList.remove('hidden');
-
-    // Build comparison table
-    const features = getComparisonFeatures();
-    const html = buildComparisonTable(features);
-    table.innerHTML = html;
-}
-
-/**
- * Get features to compare
- */
-function getComparisonFeatures() {
-    return [
-        { name: 'Algorithm Type', key: 'type', category: 'general' },
-        { name: 'Key Size', key: 'keySize', category: 'security' },
-        { name: 'Signature Size', key: 'signatureSize', category: 'security' },
-        { name: 'Performance', key: 'performance', category: 'performance' },
-        { name: 'NIST Status', key: 'nistStatus', category: 'standardization' },
-        { name: 'Security Level', key: 'securityLevel', category: 'security' },
-        { name: 'Resource Usage', key: 'resourceUsage', category: 'performance' },
-        { name: 'Libraries Count', key: 'librariesCount', category: 'availability' },
-        { name: 'Active Development', key: 'activeDev', category: 'maintenance' },
-        { name: 'Community Support', key: 'community', category: 'support' }
-    ];
+    table.innerHTML = buildComparisonTable();
 }
 
 /**
  * Build comparison table HTML
  */
-function buildComparisonTable(features) {
+function buildComparisonTable() {
+    const features = getComparisonFeatures();
+
     // Header
     let html = '<thead><tr><th>Feature</th>';
-    selectedAlgorithms.forEach(alg => {
-        const algData = allAlgorithms.find(a => a.name === alg);
-        html += `<th>
-            <div class="algorithm-header">
-                <div class="algorithm-header-name">${alg}</div>
-                <div class="algorithm-header-type">${algData?.type || 'PQC'}</div>
-            </div>
-        </th>`;
+    selectedLibraries.forEach(name => {
+        html += `<th><div class="algorithm-header"><div class="algorithm-header-name">${escapeHtml(name)}</div></div></th>`;
     });
     html += '</tr></thead>';
 
     // Body
     html += '<tbody>';
     features.forEach(feature => {
-        html += `<tr><td class="feature-name">${feature.name}</td>`;
-        selectedAlgorithms.forEach(alg => {
-            const value = getFeatureValue(alg, feature.key);
-            html += `<td class="feature-value">${formatFeatureValue(value)}</td>`;
+        html += `<tr><td class="feature-name">${escapeHtml(feature.label)}</td>`;
+        selectedLibraries.forEach(name => {
+            const lib = allLibraries.find(l => l.name === name);
+            const raw = lib ? getRawValue(lib, feature.key) : null;
+            html += `<td class="feature-value">${formatFeatureValue(feature.key, raw)}</td>`;
         });
         html += '</tr>';
     });
@@ -260,90 +184,61 @@ function buildComparisonTable(features) {
 }
 
 /**
- * Get feature value for an algorithm
+ * Features to compare
  */
-function getFeatureValue(algorithmName, featureKey) {
-    const algorithmFeatures = {
-        'Kyber': {
-            type: 'KEM (Key Encapsulation)',
-            keySize: '768-1568 bytes',
-            signatureSize: 'N/A',
-            performance: 'Fast',
-            nistStatus: 'Standardized (FIPS 203)',
-            securityLevel: '256-bit',
-            resourceUsage: 'Low-Medium',
-            librariesCount: '15+',
-            activeDev: 'Yes',
-            community: 'Excellent'
-        },
-        'Dilithium': {
-            type: 'Digital Signature',
-            keySize: '1312-2544 bytes',
-            signatureSize: '2044-4595 bytes',
-            performance: 'Fast',
-            nistStatus: 'Standardized (FIPS 204)',
-            securityLevel: '128-256-bit',
-            resourceUsage: 'Low-Medium',
-            librariesCount: '18+',
-            activeDev: 'Yes',
-            community: 'Excellent'
-        },
-        'SPHINCS+': {
-            type: 'Digital Signature (Stateless)',
-            keySize: '32-64 bytes',
-            signatureSize: '17,088-35,664 bytes',
-            performance: 'Slow',
-            nistStatus: 'Standardized (FIPS 205)',
-            securityLevel: '128-256-bit',
-            resourceUsage: 'Medium',
-            librariesCount: '12+',
-            activeDev: 'Yes',
-            community: 'Good'
-        },
-        'Falcon': {
-            type: 'Digital Signature',
-            keySize: '897-1793 bytes',
-            signatureSize: '666-1280 bytes',
-            performance: 'Very Fast',
-            nistStatus: 'Standardized (FIPS 205)',
-            securityLevel: '128-256-bit',
-            resourceUsage: 'Low',
-            librariesCount: '8+',
-            activeDev: 'Moderate',
-            community: 'Good'
-        },
-        'NTRU': {
-            type: 'KEM (Key Encapsulation)',
-            keySize: '600 bytes',
-            signatureSize: 'N/A',
-            performance: 'Very Fast',
-            nistStatus: 'Finalist',
-            securityLevel: '128-256-bit',
-            resourceUsage: 'Very Low',
-            librariesCount: '10+',
-            activeDev: 'Yes',
-            community: 'Good'
-        }
-    };
-
-    return algorithmFeatures[algorithmName]?.[featureKey] || 'N/A';
+function getComparisonFeatures() {
+    return [
+        { label: 'Developer',          key: 'developer' },
+        { label: 'Languages',          key: 'language' },
+        { label: 'Latest Version',     key: 'latest-version' },
+        { label: 'Latest Release',     key: 'latest-release' },
+        { label: 'License',            key: 'license' },
+        { label: 'Open Source',        key: 'open-source' },
+        { label: 'GitHub Repository',  key: 'github' },
+        { label: 'PQC Algorithm',      key: 'pqcAlgorithms' },
+    ];
 }
 
 /**
- * Format feature value for display
+ * Extract raw value from a library object for a given feature key
  */
-function formatFeatureValue(value) {
-    if (value === 'N/A') return `<span class="badge pending">N/A</span>`;
-    if (value === 'Yes') return `<span class="badge yes">Yes</span>`;
-    if (value === 'No') return `<span class="badge no">No</span>`;
-    
-    // Check for performance indicators
-    if (['Very Fast', 'Fast', 'Slow', 'Very Slow'].includes(value)) {
-        const badgeClass = value === 'Very Fast' || value === 'Fast' ? 'yes' : 'pending';
-        return `<span class="badge ${badgeClass}">${value}</span>`;
+function getRawValue(lib, key) {
+    if (key === 'pqcAlgorithms') {
+        return lib.pqcAlgorithms && lib.pqcAlgorithms.length > 0
+            ? lib.pqcAlgorithms
+            : null;
+    }
+    const value = lib[key];
+    return (value === undefined || value === null || value === '') ? null : value;
+}
+
+/**
+ * Format a raw value for display in the comparison table
+ */
+function formatFeatureValue(key, value) {
+    if (value === null || value === undefined) {
+        return '<span class="badge pending">N/A</span>';
     }
 
-    return value;
+    if (key === 'open-source') {
+        return value === true || value === 'true' || value === 1
+            ? '<span class="badge yes">Yes</span>'
+            : '<span class="badge no">No</span>';
+    }
+
+    if (key === 'github') {
+        const url = String(value).trim();
+        if (!url) return '<span class="badge pending">N/A</span>';
+        return `<a href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer" class="github-link">
+                    <i class="fab fa-github"></i> View Repository
+                </a>`;
+    }
+
+    if (key === 'pqcAlgorithms' && Array.isArray(value)) {
+        return value.map(alg => `<span class="badge pqc-badge">${escapeHtml(alg)}</span>`).join(' ');
+    }
+
+    return escapeHtml(String(value));
 }
 
 /**
@@ -356,45 +251,30 @@ function setupEventListeners() {
     const resetBtn = document.getElementById('reset-comparison-btn');
     const exportBtn = document.getElementById('export-comparison-btn');
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeComparisonModal);
-    }
+    if (closeBtn) closeBtn.addEventListener('click', closeComparisonModal);
+    if (searchInput) searchInput.addEventListener('input', handleLibrarySearch);
+    if (resetBtn) resetBtn.addEventListener('click', resetComparison);
+    if (exportBtn) exportBtn.addEventListener('click', exportComparison);
 
-    if (searchInput) {
-        searchInput.addEventListener('input', handleAlgorithmSearch);
-    }
-
-    if (resetBtn) {
-        resetBtn.addEventListener('click', resetComparison);
-    }
-
-    if (exportBtn) {
-        exportBtn.addEventListener('click', exportComparison);
-    }
-
-    // Close on outside click
     if (modal) {
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeComparisonModal();
-            }
+            if (e.target === modal) closeComparisonModal();
         });
     }
 }
 
 /**
- * Handle algorithm search
+ * Handle library search
  */
-function handleAlgorithmSearch(e) {
-    const searchTerm = e.target.value.toLowerCase();
+function handleLibrarySearch(e) {
+    const term = e.target.value.toLowerCase();
     const algorithmList = document.getElementById('algorithm-list');
-
     if (!algorithmList) return;
 
     algorithmList.querySelectorAll('.algorithm-item').forEach(item => {
-        const algName = item.dataset.algorithm.toLowerCase();
-        const isMatch = algName.includes(searchTerm);
-        item.style.display = isMatch ? 'block' : 'none';
+        const name = item.dataset.algorithm.toLowerCase();
+        const dev = item.querySelector('.algorithm-type')?.textContent.toLowerCase() || '';
+        item.style.display = (name.includes(term) || dev.includes(term)) ? '' : 'none';
     });
 }
 
@@ -402,12 +282,10 @@ function handleAlgorithmSearch(e) {
  * Reset comparison
  */
 function resetComparison() {
-    selectedAlgorithms = [];
-    document.querySelectorAll('.algorithm-item').forEach(item => {
-        item.classList.remove('selected');
-    });
+    selectedLibraries = [];
+    document.querySelectorAll('.algorithm-item').forEach(item => item.classList.remove('selected'));
     updateSelectedList();
-    updateAlgorithmList();
+    updateLibraryList();
     updateComparisonTable();
     const searchInput = document.getElementById('comparison-search');
     if (searchInput) searchInput.value = '';
@@ -417,28 +295,30 @@ function resetComparison() {
  * Export comparison as CSV
  */
 function exportComparison() {
-    if (selectedAlgorithms.length === 0) {
-        showNotification('No algorithms selected for export', 'warning');
+    if (selectedLibraries.length === 0) {
+        showNotification('No libraries selected for export', 'warning');
         return;
     }
 
     const features = getComparisonFeatures();
-    let csv = 'Feature,' + selectedAlgorithms.join(',') + '\n';
-
-    features.forEach(feature => {
-        const row = [feature.name];
-        selectedAlgorithms.forEach(alg => {
-            row.push(getFeatureValue(alg, feature.key));
+    const header = ['Feature', ...selectedLibraries].join(',');
+    const rows = features.map(feature => {
+        const cells = selectedLibraries.map(name => {
+            const lib = allLibraries.find(l => l.name === name);
+            const raw = lib ? getRawValue(lib, feature.key) : null;
+            if (raw === null) return 'N/A';
+            if (Array.isArray(raw)) return `"${raw.join(', ')}"`;
+            return `"${String(raw).replace(/"/g, '""')}"`;
         });
-        csv += row.join(',') + '\n';
+        return [feature.label, ...cells].join(',');
     });
 
-    // Download
+    const csv = [header, ...rows].join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `algorithm-comparison-${new Date().getTime()}.csv`;
+    a.download = `library-comparison-${Date.now()}.csv`;
     a.click();
     window.URL.revokeObjectURL(url);
 
@@ -471,7 +351,6 @@ function closeComparisonModal() {
  * Show notification
  */
 function showNotification(message, type = 'info') {
-    // Simple notification (can be enhanced with a toast library)
     const notification = document.createElement('div');
     notification.style.cssText = `
         position: fixed;
@@ -492,4 +371,19 @@ function showNotification(message, type = 'info') {
         notification.style.animation = 'slideOut 0.3s ease-out forwards';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
+}
+
+/* ── Helpers ──────────────────────────────────────────────── */
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function escapeAttr(str) {
+    return String(str).replace(/"/g, '&quot;');
 }

@@ -133,6 +133,7 @@ class SyncController extends Controller
             'latest-release'  => $lib->latest_release,
             'license'         => $lib->license,
             'open-source'     => $lib->open_source,
+            'github'          => $lib->github,
             'pqc-algorithm'   => $lib->pqc_algorithms,
             'show'            => $lib->show,
         ])->values()->toArray();
