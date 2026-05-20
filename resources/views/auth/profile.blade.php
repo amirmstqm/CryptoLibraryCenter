@@ -1,6 +1,10 @@
-@extends('auth.layout')
+@extends('layouts.app')
 
 @section('title', 'My Profile')
+
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+@endsection
 
 @section('content')
 <div class="profile-container">

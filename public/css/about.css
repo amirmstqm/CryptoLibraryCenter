@@ -67,7 +67,7 @@
 }
 
 .section-title {
-    color: #ffffff;
+    color: #1e3148;
     font-size: 1.6rem;
     margin-bottom: 1rem;
 }
@@ -80,7 +80,7 @@
 
 .offer-list li {
     margin-bottom: 0.35rem;
-    color: #e2e8f0;
+    color: #405470;
 }
 
 .team-section {
@@ -125,12 +125,12 @@
 /* ══════════════════════════════════
    Dark Mode — About page
 ══════════════════════════════════ */
-html.dark .about-main {
+html.dark .main-content {
     background: #0f172a;
 }
 
 html.dark .about-card,
-html.dark .principle-card {
+html.dark .principle {
     background: #1e293b;
     border-color: #2d3f55;
     color: #e2e8f0;
@@ -138,12 +138,20 @@ html.dark .principle-card {
 
 html.dark .about-card h2,
 html.dark .about-card h3,
-html.dark .principle-card h3 {
+html.dark .principle h3 {
     color: #e2e8f0;
 }
 
 html.dark .about-card p,
-html.dark .principle-card p {
+html.dark .principle p {
+    color: #94a3b8;
+}
+
+html.dark .section-title {
+    color: #e2e8f0;
+}
+
+html.dark .offer-list li {
     color: #94a3b8;
 }
 
