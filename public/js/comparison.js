@@ -45,7 +45,6 @@ function renderLibraryList() {
         .map(lib => `
             <div class="algorithm-item" data-algorithm="${escapeAttr(lib.name)}">
                 <div class="algorithm-name">${escapeHtml(lib.name)}</div>
-                <div class="algorithm-type">${escapeHtml(lib.developer || '')}</div>
             </div>
         `)
         .join('');
