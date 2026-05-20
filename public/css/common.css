@@ -23,10 +23,22 @@ nav {
 }
 
 .nav-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     min-height: 56px;
+}
+
+.nav-container .logo {
+    justify-self: start;
+}
+
+.nav-container .nav-links {
+    justify-self: center;
+}
+
+.nav-container .nav-auth {
+    justify-self: end;
 }
 
 .logo {
@@ -271,6 +283,7 @@ footer h3 {
 
 @media (max-width: 860px) {
     .nav-container {
+        display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: 0.8rem;
@@ -324,7 +337,6 @@ footer h3 {
     padding: 0.45rem 0.6rem;
     border-radius: 6px;
     transition: all 0.2s;
-    margin-right: 0.4rem;
     line-height: 1;
 }
 

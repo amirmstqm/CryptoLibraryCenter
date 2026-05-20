@@ -30,10 +30,10 @@
                 <li><a href="{{ route('about') }}" @class(['active' => request()->routeIs('about')])>About</a></li>
             </ul>
 
-            <button id="dark-toggle" class="dark-toggle" title="Toggle dark mode">
-                <i class="fas fa-moon" id="dark-icon"></i>
-            </button>
             <div class="nav-auth">
+                <button id="dark-toggle" class="dark-toggle" title="Toggle dark mode">
+                    <i class="fas fa-moon" id="dark-icon"></i>
+                </button>
                 @auth
                     <div class="user-menu">
                         <button class="user-menu-btn" id="userMenuBtn">
