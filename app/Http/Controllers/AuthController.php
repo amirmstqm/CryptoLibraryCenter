@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function showLogin()
     {
         if (Auth::check()) {
-            return redirect()->route('home');
+            return redirect()->route('libraries');
         }
         return view('auth.login');
     }
@@ -33,7 +33,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('libraries'));
         }
 
         return back()->withErrors([
@@ -47,7 +47,7 @@ class AuthController extends Controller
     public function showRegister()
     {
         if (Auth::check()) {
-            return redirect()->route('home');
+            return redirect()->route('libraries');
         }
         return view('auth.register');
     }
@@ -73,7 +73,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('home')->with('success', 'Welcome! Your account has been created.');
+        return redirect()->route('libraries')->with('success', 'Welcome! Your account has been created.');
     }
 
     /**

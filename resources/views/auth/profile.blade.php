@@ -117,17 +117,6 @@
                     </button>
                 </form>
             </div>
-
-            <div class="profile-section">
-                <h3>Logout</h3>
-                <p>End your current session and return to the home page.</p>
-                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                    @csrf
-                    <button type="submit" class="btn btn-secondary">
-                        Logout
-                    </button>
-                </form>
-            </div>
         </div>
     </div>
 </div>

@@ -49,10 +49,10 @@
                 </div>
 
             </div>
+
+            <a href="{{ route('libraries') }}" class="back-button">← Back to Library List</a>
         </div>
     </div>
-
-    <a href="{{ route('libraries') }}" class="back-button">← Back to Library List</a>
 
 @endsection
 

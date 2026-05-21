@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 // -----------------------------------------------
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('home');
+        return redirect()->route('libraries');
     }
     return app(\App\Http\Controllers\PageController::class)->landing();
 })->name('landing');
@@ -41,7 +41,6 @@ Route::get('/', function () {
 // Page Routes (Protected - Auth Required)
 // -----------------------------------------------
 Route::middleware('auth')->group(function () {
-    Route::get('/home', [PageController::class, 'home'])->name('home');
     Route::get('/libraries', [PageController::class, 'libraries'])->name('libraries');
     Route::get('/libraries/details', [PageController::class, 'details'])->name('details');
     Route::get('/about', [PageController::class, 'about'])->name('about');

@@ -4,6 +4,7 @@
 .main-content {
     background: #e5e7eb;
     padding: 2rem 0 3rem;
+    min-height: calc(100vh - 56px);
 }
 
 /* ── Detail card ── */
@@ -129,7 +130,7 @@ pre {
 
 .back-button {
     display: inline-block;
-    margin-top: 0.9rem;
+    margin-top: 1.5rem;
     text-decoration: none;
     color: #2c7dba;
     font-weight: 700;

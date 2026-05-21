@@ -21,13 +21,11 @@
     {{-- Navigation --}}
     <nav>
         <div class="container nav-container">
-            <a href="{{ route('home') }}" class="logo">
+            <a href="{{ route('libraries') }}" class="logo">
                 <span>CryptoPortal</span>
             </a>
             <ul class="nav-links">
-                <li><a href="{{ route('home') }}" @class(['active' => request()->routeIs('home')])>Home</a></li>
                 <li><a href="{{ route('libraries') }}" @class(['active' => request()->routeIs('libraries')])>Library</a></li>
-                <li><a href="{{ route('about') }}" @class(['active' => request()->routeIs('about')])>About</a></li>
             </ul>
 
             <div class="nav-auth">
@@ -47,6 +45,9 @@
                         <div class="user-dropdown" id="userDropdown">
                             <a href="{{ route('profile') }}" class="dropdown-item">
                                 <i class="fas fa-user"></i> My Profile
+                            </a>
+                            <a href="{{ route('about') }}" class="dropdown-item">
+                                <i class="fas fa-info-circle"></i> About
                             </a>
                             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                 @csrf
