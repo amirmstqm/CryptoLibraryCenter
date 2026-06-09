@@ -469,6 +469,196 @@
     }
 }
 
+/* Dark Mode Support */
+html.dark .comparison-modal {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+html.dark .comparison-modal-content {
+    background: #1f2937;
+    color: #e5e7eb;
+}
+
+html.dark .comparison-modal-header {
+    background: #111827;
+    border-bottom-color: #374151;
+    color: #e5e7eb;
+}
+
+html.dark .comparison-modal-header h2 {
+    color: #f3f4f6;
+}
+
+html.dark .comparison-close-btn {
+    color: #9ca3af;
+}
+
+html.dark .comparison-close-btn:hover {
+    color: #f3f4f6;
+}
+
+html.dark .selection-header h3 {
+    color: #f3f4f6;
+}
+
+html.dark .selection-hint {
+    color: #d1d5db;
+}
+
+html.dark .algorithm-selector {
+    background: #111827;
+    border-color: #374151;
+}
+
+html.dark .search-box i {
+    color: #6b7280;
+}
+
+html.dark .search-box input {
+    background: #0f172a;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+html.dark .search-box input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+html.dark .algorithm-list::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+
+html.dark .algorithm-list::-webkit-scrollbar-thumb {
+    background: #4b5563;
+}
+
+html.dark .algorithm-list::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+}
+
+html.dark .algorithm-item {
+    background: #111827;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+html.dark .algorithm-item:hover {
+    border-color: #3b82f6;
+    background: #0f172a;
+}
+
+html.dark .algorithm-item.selected {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
+html.dark .selected-algorithms {
+    background: #111827;
+    border-color: #374151;
+}
+
+html.dark .selected-algorithms h4 {
+    color: #f3f4f6;
+}
+
+html.dark .selected-item {
+    background: #0f172a;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+html.dark .remove-btn {
+    color: #f87171;
+}
+
+html.dark .remove-btn:hover {
+    color: #ef4444;
+}
+
+html.dark .comparison-toolbar h3 {
+    color: #f3f4f6;
+}
+
+html.dark .btn-secondary {
+    background: #111827;
+    border-color: #374151;
+    color: #d1d5db;
+}
+
+html.dark .btn-secondary:hover {
+    background: #1f2937;
+    border-color: #4b5563;
+}
+
+html.dark .comparison-table-wrapper {
+    background: #111827;
+    border-color: #374151;
+}
+
+html.dark .comparison-table thead {
+    background: #0f172a;
+    border-bottom-color: #374151;
+}
+
+html.dark .comparison-table th {
+    color: #f3f4f6;
+}
+
+html.dark .comparison-table tbody tr:hover {
+    background: #1f2937;
+}
+
+html.dark .comparison-table td {
+    border-bottom-color: #374151;
+    color: #d1d5db;
+}
+
+html.dark .feature-name {
+    background: #0f172a;
+    border-bottom-color: #374151;
+    color: #f3f4f6;
+}
+
+html.dark .algorithm-header-name {
+    color: #f3f4f6;
+}
+
+html.dark .algorithm-header-type {
+    color: #9ca3af;
+}
+
+html.dark .feature-value {
+    color: #d1d5db;
+}
+
+html.dark .feature-value.yes {
+    color: #34d399;
+}
+
+html.dark .feature-value.no {
+    color: #f87171;
+}
+
+html.dark .feature-value.pending {
+    color: #fbbf24;
+}
+
+html.dark .notification {
+    background: #1f2937;
+    color: #e5e7eb;
+    border-left-color: #3b82f6;
+}
+
+html.dark .notification.warning {
+    border-left-color: #f59e0b;
+}
+
+html.dark .notification.success {
+    border-left-color: #10b981;
+}
+
 /* ── Comparison badges ────────────────────────────────────── */
 .badge {
     display: inline-block;

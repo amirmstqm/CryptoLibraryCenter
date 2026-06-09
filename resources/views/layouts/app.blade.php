@@ -25,7 +25,7 @@
                 <span>CryptoPortal</span>
             </a>
             <ul class="nav-links">
-                <li><a href="{{ route('libraries') }}" @class(['active' => request()->routeIs('libraries')])>Library</a></li>
+                <!-- <li><a href="{{ route('libraries') }}" @class(['active' => request()->routeIs('libraries')])>Library</a></li> -->
             </ul>
 
             <div class="nav-auth">
