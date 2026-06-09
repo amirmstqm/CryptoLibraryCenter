@@ -24,8 +24,7 @@
                 <button id="dark-toggle" class="dark-toggle" title="Toggle dark mode">
                     <i class="fas fa-moon" id="dark-icon"></i>
                 </button>
-                <a href="{{ route('login') }}" class="btn-ghost">Sign In</a>
-                <a href="{{ route('register') }}" class="btn-primary-nav">Get Started</a>
+                <a href="{{ route('libraries') }}" class="btn-primary-nav">Explore Libraries</a>
             </div>
         </div>
     </nav>
@@ -48,11 +47,8 @@
                 the future of secure computing.
             </p>
             <div class="hero-cta-group">
-                <a href="{{ route('register') }}" class="cta-primary">
-                    <i class="fas fa-rocket"></i> Get Started Free
-                </a>
-                <a href="{{ route('login') }}" class="cta-secondary">
-                    Sign In <i class="fas fa-arrow-right"></i>
+                <a href="{{ route('libraries') }}" class="cta-primary">
+                    <i class="fas fa-rocket"></i> Explore Libraries
                 </a>
             </div>
         </div>
@@ -218,13 +214,10 @@
                 <h2>Ready to Explore?</h2>
                 <p>Join researchers and developers who rely on CryptoPortal for their post-quantum cryptography needs.</p>
                 <div class="cta-buttons">
-                    <a href="{{ route('register') }}" class="cta-primary">
-                        <i class="fas fa-user-plus"></i> Create Free Account
-                    </a>
-                    <a href="{{ route('login') }}" class="cta-secondary-dark">
-                        Already have an account? Sign In
-                    </a>
-                </div>
+                <a href="{{ route('libraries') }}" class="cta-primary">
+                    <i class="fas fa-search"></i> Browse Libraries
+                </a>
+            </div>
             </div>
         </div>
     </section>
@@ -239,14 +232,8 @@
             <div class="footer-links-group">
                 <div class="footer-col">
                     <h4>Platform</h4>
-                    <a href="{{ route('login') }}">Library</a>
-                    <a href="{{ route('login') }}">Comparison</a>
+                    <a href="{{ route('libraries') }}">Library</a>
                     <a href="{{ route('about') }}">About</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Account</h4>
-                    <a href="{{ route('login') }}">Sign In</a>
-                    <a href="{{ route('register') }}">Register</a>
                 </div>
             </div>
         </div>

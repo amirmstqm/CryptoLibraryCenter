@@ -1,8 +1,7 @@
 /**
  * library-details.js
  *
- * PRIMARY source: Laravel API (/api/libraries/{id}) — data from MySQL
- * FALLBACK source: Firebase Firestore
+ * Data source: Firebase Firestore
  */
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -198,37 +197,14 @@ function renderLibraryDetail(data) {
 }
 
 // -----------------------------------------------
-// 1. Fetch from MySQL API (primary)
-// -----------------------------------------------
-async function fetchFromMySQL(id) {
-    try {
-        const response = await fetch(`/api/libraries/${id}`, {
-            headers: { 'Accept': 'application/json' }
-        });
-
-        if (!response.ok) return null;
-
-        const data = await response.json();
-        if (data.error) return null;
-
-        console.info('Loaded library detail from MySQL.');
-        return data;
-
-    } catch (err) {
-        console.warn('MySQL detail fetch error:', err.message);
-        return null;
-    }
-}
-
-// -----------------------------------------------
-// 2. Fallback: Firebase Firestore (original method)
+// Fetch from Firebase Firestore
 // -----------------------------------------------
 async function fetchFromFirebase(id) {
     const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js');
     const { getFirestore, doc, getDoc } = await import('https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js');
     const { default: firebaseConfig } = await import('./firebase-config.js');
 
-    const app = initializeApp(firebaseConfig, 'detail-fallback');
+    const app = initializeApp(firebaseConfig, 'detail-app');
     const db  = getFirestore(app);
 
     const libSnap     = await getDoc(doc(db, 'libraries', id));
@@ -239,7 +215,7 @@ async function fetchFromFirebase(id) {
     const libData     = libSnap.exists()     ? libSnap.data()     : {};
     const articleData = articleSnap.exists() ? articleSnap.data() : {};
 
-    console.info('Loaded library detail from Firebase (fallback).');
+    console.info('Loaded library detail from Firebase.');
     return { ...libData, ...articleData, name: libData.name || articleData.name || 'Unknown' };
 }
 
@@ -249,7 +225,7 @@ async function fetchFromFirebase(id) {
 async function init() {
     if (!libraryId) return;
 
-    const data = await fetchFromMySQL(libraryId) ?? await fetchFromFirebase(libraryId);
+    const data = await fetchFromFirebase(libraryId);
 
     if (data) {
         renderLibraryDetail(data);

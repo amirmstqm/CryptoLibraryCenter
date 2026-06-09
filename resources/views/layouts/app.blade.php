@@ -21,7 +21,7 @@
     {{-- Navigation --}}
     <nav>
         <div class="container nav-container">
-            <a href="{{ route('libraries') }}" class="logo">
+            <a href="{{ route('landing') }}" class="logo">
                 <span>CryptoPortal</span>
             </a>
             <ul class="nav-links">
@@ -32,37 +32,6 @@
                 <button id="dark-toggle" class="dark-toggle" title="Toggle dark mode">
                     <i class="fas fa-moon" id="dark-icon"></i>
                 </button>
-                @auth
-                    <div class="user-menu">
-                        <button class="user-menu-btn" id="userMenuBtn">
-                            @if (auth()->user()->profile_picture)
-                                <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="{{ auth()->user()->name }}" class="user-avatar">
-                            @else
-                                <div class="user-avatar-placeholder">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
-                            @endif
-                            <span class="user-name">{{ auth()->user()->name }}</span>
-                        </button>
-                        <div class="user-dropdown" id="userDropdown">
-                            <a href="{{ route('profile') }}" class="dropdown-item">
-                                <i class="fas fa-user"></i> My Profile
-                            </a>
-                            <a href="{{ route('about') }}" class="dropdown-item">
-                                <i class="fas fa-info-circle"></i> About
-                            </a>
-                            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                                @csrf
-                                <button type="submit" class="dropdown-item logout-btn">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @else
-                    <div class="nav-auth-links">
-                        <a href="{{ route('login') }}" class="btn-login">Sign In</a>
-                        <a href="{{ route('register') }}" class="btn-register">Register</a>
-                    </div>
-                @endauth
             </div>
         </div>
     </nav>
@@ -90,22 +59,6 @@
     @yield('scripts')
 
     <script>
-        // User menu dropdown
-        const userMenuBtn = document.getElementById('userMenuBtn');
-        const userDropdown = document.getElementById('userDropdown');
-
-        if (userMenuBtn) {
-            userMenuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                userDropdown.classList.toggle('active');
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', () => {
-                userDropdown.classList.remove('active');
-            });
-        }
-
         // Dark mode toggle
         const darkToggle = document.getElementById('dark-toggle');
         const darkIcon   = document.getElementById('dark-icon');
