@@ -86,6 +86,12 @@
     color: #405470;
 }
 
+/* Make limitation paragraphs justified (even left & right edges) */
+.limitation-content p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 .github-link {
     display: inline-flex;
     align-items: center;
