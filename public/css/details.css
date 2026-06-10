@@ -70,6 +70,7 @@
 .detail-item,
 .github-section,
 .algorithms-section,
+.overview-content,
 .limitation-content,
 .installation-step,
 .testing-item {
@@ -82,11 +83,13 @@
 
 .detail-item p,
 .github-section p,
+.overview-content p,
 .limitation-content p {
     color: #405470;
 }
 
-/* Make limitation paragraphs justified (even left & right edges) */
+/* Make overview and limitation paragraphs justified (even left & right edges) */
+.overview-content p,
 .limitation-content p {
     text-align: justify;
     text-justify: inter-word;
@@ -271,6 +274,7 @@ html.dark .tab-button.active {
 html.dark .detail-item,
 html.dark .github-section,
 html.dark .algorithms-section,
+html.dark .overview-content,
 html.dark .limitation-content,
 html.dark .installation-step,
 html.dark .testing-item {
@@ -286,6 +290,7 @@ html.dark .algorithms-section h3 {
 
 html.dark .detail-item p,
 html.dark .github-section p,
+html.dark .overview-content p,
 html.dark .limitation-content p {
     color: #94a3b8;
 }
