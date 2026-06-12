@@ -125,7 +125,39 @@
                         </div>
                     </div>
                     <div class="features" id="library-cards">
-                        {{-- Cards injected by data-fetching.js --}}
+                        @foreach ($libraries as $lib)
+                            @php $pqcAlgorithms = $lib->pqcAlgorithms; @endphp
+                            <div class="feature-card"
+                                 data-kyber="{{ in_array('Kyber', $pqcAlgorithms) ? 'true' : 'false' }}"
+                                 data-dilithium="{{ in_array('Dilithium', $pqcAlgorithms) ? 'true' : 'false' }}"
+                                 data-sphincs="{{ in_array('SPHINCS+', $pqcAlgorithms) ? 'true' : 'false' }}"
+                                 data-falcon="{{ in_array('Falcon', $pqcAlgorithms) ? 'true' : 'false' }}"
+                                 data-type="{{ count($pqcAlgorithms) ? 'pqc' : 'classic' }}"
+                                 data-language="{{ $lib->language ?? '' }}"
+                                 data-license="{{ $lib->license ?? '' }}"
+                                 data-open-source="{{ $lib->open_source ? 'true' : 'false' }}"
+                                 data-name="{{ strtolower($lib->name) }}"
+                                 data-developer="{{ strtolower($lib->developer ?? '') }}"
+                                 data-pqc-algorithms="{{ implode(',', array_map('strtolower', $pqcAlgorithms)) }}"
+                                 onclick="window.location.href='{{ route('details', ['id' => $lib->firebase_id]) }}'">
+
+                                <h3>{{ $lib->name }}</h3>
+                                <div class="library-details">
+                                    <p><strong>Developer:</strong> {{ $lib->developer ?? 'N/A' }}</p>
+                                    <p><strong>Languages:</strong> {{ $lib->language ?? 'N/A' }}</p>
+                                    <p><strong>Latest Version:</strong> {{ $lib->latest_version ?? 'N/A' }} ({{ $lib->latest_release ?? 'N/A' }})</p>
+                                    <p><strong>License:</strong> {{ $lib->license ?? 'N/A' }}</p>
+                                    <p><strong>Open Source:</strong> {{ $lib->open_source ? 'Yes' : 'No' }}</p>
+                                </div>
+                                @if (count($pqcAlgorithms))
+                                    <div class="algorithm-badges">
+                                        @foreach ($pqcAlgorithms as $alg)
+                                            <span class="algorithm-badge">{{ $alg }}</span>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -139,28 +171,22 @@
 @endsection
 
 @section('scripts')
-    {{-- Firebase SDKs --}}
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    {{-- Inject library data for the client-side comparison module --}}
+    <script>
+        window.__libraries__ = @json($librariesJson);
+    </script>
 
     {{-- App JS modules --}}
     <script type="module" src="{{ asset('js/main.js') }}"></script>
     <script type="module" src="{{ asset('js/filter.js') }}"></script>
-    <script type="module" src="{{ asset('js/library-details.js') }}"></script>
 
-    {{-- Wire up compare button after DOM is ready --}}
+    {{-- Wire up compare button --}}
     <script type="module">
-        // Wait for comparison module to be initialized
         document.addEventListener('DOMContentLoaded', () => {
             const compareBtn = document.getElementById('compare-btn');
             if (compareBtn && window.openComparisonModal) {
                 compareBtn.addEventListener('click', window.openComparisonModal);
             }
         });
-    </script>
-    <script type="module" src="{{ asset('js/firebase-config.js') }}"></script>
-    <script type="module">
-        import { fetchAndDisplayLibraries } from "{{ asset('js/data-fetching.js') }}";
-        fetchAndDisplayLibraries();
     </script>
 @endsection
