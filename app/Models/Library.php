@@ -8,6 +8,13 @@ class Library extends Model
 {
     protected $table = 'algorithms';
 
+    protected $fillable = [
+        'firebase_id', 'name', 'developer', 'language', 'category',
+        'latest_version', 'latest_release', 'license', 'open_source',
+        'github', 'show', 'pqc_algorithm', 'overview', 'limitation',
+        'installation_step', 'testing', 'image',
+    ];
+
     protected $casts = [
         'pqc_algorithm'     => 'array',
         'installation_step' => 'array',
